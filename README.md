@@ -1,2 +1,9 @@
-# tdse-tf_2026-2doC_1_02
-# FIUBA - Electrónica - Taller de Sistemas Embebidos - Trabajo Final - 2026-2doC - 1-02: Titulo del Trabajo Final
+# FIUBA - Electrónica - Taller de Sistemas Embebidos
+## Trabajo Final - 2026-2doC - 01C-02: Título del Trabajo Final
+### Bitácora de Entregas
+| N° | Detalles | Fecha | Deadline |
+| :--: | :--------------------- | :------: | :-------: |
+| 01 | README.md | 10/16/2026 | Semana 08 |
+| 02 | Propuesta.md | | Semana 11 |
+| 03 | Informe_de_Avance.md | | Semana 14 |
+| 04 | Memoria_Video_Código.md | | Semana 17 |
