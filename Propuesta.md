@@ -96,7 +96,7 @@ Con la llegada del siglo XXI se llevó a cabo una revolución digital donde todo
 | :--- | :--- |
 | **Disparador** | El nivel medido de la variable asignada al Buzzer y LED (ej. Gas o $\text{CO}_2$) supera el umbral de sensibilidad configurado en el `SET_UP`. |
 | **Precondiciones** | El STM32 ha cargado los datos del `SET_UP` desde la EEPROM externa y los sensores están activos. El STM32 está en modo NORMAL |
-| **Flujo principal** | 1. El STM32 muestrea los sensores y actualiza los datos vía la app a través del módulo HM-10.<br>3. El firmware compara la lectura de la variable seleccionada en el `SET_UP` contra el umbral de sensibilidad asignado.<br>4. Al superar el umbral, se activa el Buzzer y el LED de alarma correspondiente.<br>5. El LED controlado por PWM conmuta a su patrón de advertencia. |
+| **Flujo principal** | 1. El STM32 muestrea los sensores y actualiza los datos vía la app a través del módulo HM-10.<br>2. El firmware compara la lectura de la variable seleccionada en el `SET_UP` contra el umbral de sensibilidad asignado.<br>3. Al superar el umbral, se activa el Buzzer y el LED de alarma correspondiente.<br>4. El LED controlado por PWM conmuta a su patrón de advertencia. |
 | **Flujos alternativos** | **a) La variable retorna a valores seguros:** El Buzzer se apaga automáticamente y vuelve a indicar estado normal.<br>**b) Se pierde la conectividad Bluetooth** La app notifica al usuario avisando que se desconectó del sistema.  |
 
 ---
@@ -107,7 +107,7 @@ Con la llegada del siglo XXI se llevó a cabo una revolución digital donde todo
 | :--- | :--- |
 | **Disparador** | El usuario elige desde la app al modo `SET_UP`. |
 | **Precondiciones** | El sistema está encendido y la EEPROM externa está operativa en el bus I2C/SPI. |
-| **Flujo principal** | 1. La FSM del STM32 conmuta al estado `SET_UP`.<br>2. La app muestra el menú de configuración: "1. Variable de control | 2. Sensibilidad".<br>3. El usuario selecciona la variable a asociar al Buzzer y LED (ej. cambiar de "Gas" a "$\text{CO}_2$") y ajusta la sensibilidad.<br>4. Al presionar el Button "Guardar" desde la App, el STM32 escribe los nuevos datos en la memoria EEPROM externa.<br>5. La app confirma "Config Guardada" y emite un todo corto en el Buzzer. |
+| **Flujo principal** | 1. La FSM del STM32 conmuta al estado `SET_UP`.<br>2. La app muestra el menú de configuración: \|1. Variable de control \|2. Sensibilidad".<br>3. El usuario selecciona la variable a asociar al Buzzer y LED (ej. cambiar de "Gas" a "CO2") y ajusta la sensibilidad.<br>4. Al presionar el Button "Guardar" desde la App, el STM32 escribe los nuevos datos en la memoria EEPROM externa.<br>5. La app confirma "Config Guardada" y emite un todo corto en el Buzzer. |
 | **Flujos alternativos** | **a) Pérdida de alimentación o conexión Bluetooth durante el ajuste:** Al reiniciar, el STM32 recupera el último `SET_UP` guardado válidamente en la EEPROM externa.<br>**b) Valores fuera de rango recibidos por BLE:** El STM32 descarta el comando remoto. |
 
 ---
@@ -120,4 +120,3 @@ Con la llegada del siglo XXI se llevó a cabo una revolución digital donde todo
 | **Precondiciones** | Está en modo NORMAL. |
 | **Flujo principal** | 1. Se enciende un LED indicador de falla.<br>2. Se envía una notificación de falla al usuario vía la app.<br>3. El STM32 entra en modo `FALLA`.  |
 | **Flujos alternativos** | **a) Desconexión Bluetooth:** El STM32 continúa en modo `FALLA`.<br>**b) Sensor vuelve a funcionar correctamente:** El STM32 sale de modo `FALLA` y vuelve al modo `NORMAL`. |
-```
