@@ -1,3 +1,5 @@
+<img width="789" height="175" alt="WhatsApp Image 2026-10-30 at 10 54 33" src="https://github.com/user-attachments/assets/7585ab7f-6e80-415d-bd68-dab0041f97f5" />
+
 # Sistema de Monitoreo Ambiental y Seguridad para Smart House
 
 **Proyecto:** Sistema de Monitoreo Ambiental y Seguridad para Smart House  
@@ -29,9 +31,9 @@ Los proyectos similares considerados son:
 2. **Opción 2 (Propuesta SmartHouse STM32):** Monitoreo de Gas, $\text{CO}_2$, Temp y Humedad con memoria EEPROM externa (I2C/SPI) para almacenamiento de `SET_UP`, modulación PWM para intensidad de LED, gestión de modos `NORMAL` / `SET_UP` / 'FALLA' y comunicación BLE (HM-10) con App móvil propia.
 3. **Opción 3 (Compleja / Alto Costo):** Monitoreo ambiental con pantalla gráfica OLED, sensores industriales NDIR de $\text{CO}_2$, módulo Wi-Fi e integración a plataformas cloud comerciales.
 
-Para la elección, se ponderan los criterios del 1 al 10 según la posibilidad de implementación:
+Para la elección, se ponderan los criterios del 1 al 10 según la posibilidad de implementación, como se ilustra en la tabla 1
 
-#### Tabla 1.2.1: Comparación de alternativas de proyecto
+#### Tabla 1: Comparación de alternativas de proyecto
 
 | Criterio | Peso | Opción 1: Base Estándar (Puntuación \| Ponderado) | Opción 2: Propuesta SmartHouse STM32 (Puntuación \| Ponderado) | Opción 3: Compleja / Alto Costo (Puntuación \| Ponderado) |
 | :--- | :---: | :---: | :---: | :---: |
@@ -44,11 +46,13 @@ Para la elección, se ponderan los criterios del 1 al 10 según la posibilidad d
 ---
 
 ### 1.3 Selección de proyecto
-Considerando los puntajes asignados a las opciones, se seleccionó la **Opción 2 (Propuesta SmartHouse STM32)**. Utiliza periféricos de comunicación digital (I2C/SPI para EEPROM, UART para BLE, ADC para sensores analógicos, Timers para PWM), mantiene un presupuesto bajo y dificultad técnica accesible. 
+Considerando los puntajes asignados en la tabla 1 a las opciones, se seleccionó la **Opción 2 (Propuesta SmartHouse STM32)**. Utiliza periféricos de comunicación digital (I2C/SPI para EEPROM, UART para BLE, ADC para sensores analógicos, Timers para PWM), mantiene un presupuesto bajo y dificultad técnica accesible. 
 
 ---
 
 ### 1.3.1 Diagrama en bloques
+En la Figura 1 se presenta el diagrama de bloques. El bloque principal es el microcontrolador STM32, que se comunica con varios periféricos mediante diferentes interfaces de comunicación. A través de UART se comunica con un módulo Bluetooth que envía y recibe información desde la aplicación móvil. El microcontrolador se comunica con los sensores de dióxido de carbono, temperatura y humedad vía I2C. Se utiliza SPI para comunicarse con la EEPROM. El sensor de gas es analógico, por lo que se conecta a un canal ADC (o pin analógico). El buzzer y los dos LED indicadores de funcionamiento NORMAL o FALLA utilizan GPIO. El LED indicador de que se superó el umbral configurado será controlado mediante PWM para que pueda titilar suavemente.
+#### Figura 1: diagrama en bloques
 <img width="1161" height="465" alt="tdsefinal_Export" src="https://github.com/user-attachments/assets/80c66b99-1259-4694-a4b5-085f9ed3b467" />
 
 ---
@@ -57,9 +61,13 @@ Considerando los puntajes asignados a las opciones, se seleccionó la **Opción 
 
 En el mercado existen varios productos con la funcionalidad de detección de cambios ambientales, sea de temperatura, humedad, presencia de gases naturales, etc. La gran mayoría de estos productos económicos miden únicamente la temperatura y/o la humedad, con la excepción de estaciones meteorológicas con un costo muy elevado. Nuestro proyecto tiene como objetivo unificar la medición de distintos factores de la naturaleza a un costo accesible.
 
-Con la llegada del siglo XXI se llevó a cabo una revolución digital donde todo se conecta al Internet vía IoT y, de a poco, todo se reimplementa usando sistemas embebidos. Es por esto que surgen productos "Smart". Nuestro producto se ubica en un punto medio que, por más que no utilizamos el Internet, incorporamos Bluetooth para la transmición de información del ambiente a un celular.
+Con la llegada del siglo XXI se llevó a cabo una revolución digital donde todo se conecta al Internet vía IoT y, de a poco, todo se reimplementa usando sistemas embebidos. Es por esto que surgen productos "Smart". Nuestro producto se ubica en un punto medio que, por más que no utilizamos el Internet, incorporamos Bluetooth para la transmisión de información del ambiente a un celular.
 
 ### 2.1 Requisitos del proyecto
+
+En la tabla 2 se presentan los requerimientos del proyecto.
+
+#### Tabla 2: requisitos del proyecto
 
 | Grupo | ID | Descripción |
 | :--- | :---: | :--- |
@@ -90,7 +98,9 @@ Con la llegada del siglo XXI se llevó a cabo una revolución digital donde todo
 
 ### 2.2 Casos de Uso
 
-#### Tabla 2.2.1: Caso de uso 1: Monitoreo continuo y disparo de alarma (Modo NORMAL)
+En las tablas 3 a 5 se presentan 3 casos de uso diferentes.
+
+#### Tabla 3: Caso de uso 1: Monitoreo continuo y disparo de alarma (Modo NORMAL)
 
 | Elemento | Definición |
 | :--- | :--- |
@@ -101,18 +111,18 @@ Con la llegada del siglo XXI se llevó a cabo una revolución digital donde todo
 
 ---
 
-#### Tabla 2.2.2: Caso de uso 2: Configuración del sistema (`SET_UP`) y grabado en EEPROM externa
+#### Tabla 4: Caso de uso 2: Configuración del sistema (`SET_UP`) y grabado en EEPROM externa
 
 | Elemento | Definición |
 | :--- | :--- |
 | **Disparador** | El usuario elige desde la app al modo `SET_UP`. |
 | **Precondiciones** | El sistema está encendido y la EEPROM externa está operativa en el bus I2C/SPI. |
-| **Flujo principal** | 1. La FSM del STM32 conmuta al estado `SET_UP`.<br>2. La app muestra el menú de configuración: \|1. Variable de control \|2. Sensibilidad".<br>3. El usuario selecciona la variable a asociar al Buzzer y LED (ej. cambiar de "Gas" a "CO2") y ajusta la sensibilidad.<br>4. Al presionar el Button "Guardar" desde la App, el STM32 escribe los nuevos datos en la memoria EEPROM externa.<br>5. La app confirma "Config Guardada" y emite un todo corto en el Buzzer. |
+| **Flujo principal** | 1. La FSM del STM32 conmuta al estado `SET_UP`.<br>2. La app muestra el menú de configuración: "\|1. Variable de control \|2. Sensibilidad".<br>3. El usuario selecciona la variable a asociar al Buzzer y LED (ej. cambiar de "Gas" a "CO2") y ajusta la sensibilidad.<br>4. Al presionar el Button "Guardar" desde la App, el STM32 escribe los nuevos datos en la memoria EEPROM externa.<br>5. La app confirma "Config Guardada" y emite un todo corto en el Buzzer. |
 | **Flujos alternativos** | **a) Pérdida de alimentación o conexión Bluetooth durante el ajuste:** Al reiniciar, el STM32 recupera el último `SET_UP` guardado válidamente en la EEPROM externa.<br>**b) Valores fuera de rango recibidos por BLE:** El STM32 descarta el comando remoto. |
 
 ---
 
-#### Tabla 2.2.3: Caso de uso 3: Falla en los sensores (modo FALLA)
+#### Tabla 5: Caso de uso 3: Falla en los sensores (modo FALLA)
 
 | Elemento | Definición |
 | :--- | :--- |
