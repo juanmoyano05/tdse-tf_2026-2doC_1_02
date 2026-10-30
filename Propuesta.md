@@ -1,4 +1,4 @@
-<img width="789" height="175" alt="WhatsApp Image 2026-10-30 at 10 54 33" src="https://github.com/user-attachments/assets/7585ab7f-6e80-415d-bd68-dab0041f97f5" />
+<img width="762" height="292" alt="logo-fiuba" src="https://github.com/user-attachments/assets/0d50ab93-e34b-4702-9212-d656eb397bc5" />
 
 # Sistema de Monitoreo Ambiental y Seguridad para Smart House
 
